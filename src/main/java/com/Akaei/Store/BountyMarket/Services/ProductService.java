@@ -19,7 +19,7 @@ public class ProductService {
         return repository.findAll();
     }
 
-    @Cacheable(value = "products", key = "#name") //can't cache Flux apparently
+    @Cacheable(value = "products", key = "#name") //can't cache Flux apparently so not sure if this does any good
     public Flux<Product> getProductsByName(String username){
         return repository.findAll()
                 .filter(product -> product.getUsername().equals(username));

@@ -1,5 +1,7 @@
 package com.Akaei.Store.BountyMarket.API;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -7,8 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.Akaei.Store.BountyMarket.Models.Product;
 import com.Akaei.Store.BountyMarket.Services.ProductService;
+import org.springframework.http.ResponseEntity;
 
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 /*\
  * APIController.java
@@ -29,8 +33,14 @@ public class APIController {
     }
 
     @GetMapping("/products")
-    public Flux<Product> getAllProducts(){
-        return service.getAllProducts();
+    public Mono<ResponseEntity<List<Product>>> getAllProducts(){
+        Flux<Product> products = service.getAllProducts();
+        return products.collectList().map(list -> {
+            if(list.isEmpty()){
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(list);
+        });
     }
 
 }

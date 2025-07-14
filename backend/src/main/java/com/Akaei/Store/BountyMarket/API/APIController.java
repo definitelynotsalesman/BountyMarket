@@ -1,7 +1,5 @@
 package com.Akaei.Store.BountyMarket.API;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,6 +32,7 @@ public class APIController {
     public Flux<Product> getAllProducts(){
         return service.getAllProducts();
     }
+
 }
 /*
 To implement caching with Redis in your Spring Boot project, follow these steps:

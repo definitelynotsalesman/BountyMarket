@@ -15,6 +15,10 @@ public class ProductService {
     @Autowired
     private ProductRepository repository;
 
+    public ProductService(ProductRepository repository) {
+        this.repository = repository;
+    }
+    
     public Flux<Product> getAllProducts(){
         return repository.findAll();
     }
@@ -41,5 +45,11 @@ public class ProductService {
                         product.setPrice(productDetails.getPrice());
                         return repository.save(product); // returns Mono<Product>
                     });
-        }
     }
+
+    public Mono<Void> deleteProductById(Integer id) {
+        return repository.deleteById(id);
+    }
+
+}
+    
